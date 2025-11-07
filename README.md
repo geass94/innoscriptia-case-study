@@ -17,7 +17,7 @@ A comprehensive news aggregation API built with Laravel that collects articles f
 
 ## Tech Stack
 
-- **Framework**: Laravel 11.x
+- **Framework**: Laravel 12
 - **Database**: SQLite (default) / MySQL / PostgreSQL
 - **API Clients**: Guzzle HTTP Client
 - **Data Transfer**: Spatie Laravel Data
