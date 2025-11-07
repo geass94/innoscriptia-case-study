@@ -20,6 +20,55 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ArticleController extends Controller
 {
+    /**
+     * List articles
+     *
+     * Retrieve a paginated list of articles with optional filtering and sorting.
+     *
+     * @group Articles
+     *
+     * @queryParam page integer Page number for pagination. Example: 1
+     * @queryParam per_page integer Number of items per page (1-100). Example: 15
+     * @queryParam sort string Sort field and direction. Prefix with - for descending. Example: -published_at
+     * @queryParam filter[keyword] string Search keyword in title, description, and content. Example: technology
+     * @queryParam filter[source] string Filter by a single source. Example: NewsAPI
+     * @queryParam filter[sources][] string[] Filter by multiple sources. Example: NewsAPI
+     * @queryParam filter[category] string Filter by a single category. Example: business
+     * @queryParam filter[categories][] string[] Filter by multiple categories. Example: business
+     * @queryParam filter[author] string Filter by a single author name. Example: John Doe
+     * @queryParam filter[authors][] string[] Filter by multiple authors. Example: John Doe
+     * @queryParam filter[date_range][from] string Filter articles from this date (Y-m-d format). Example: 2024-01-01
+     * @queryParam filter[date_range][to] string Filter articles to this date (Y-m-d format). Example: 2024-12-31
+     *
+     * @response 200 {
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "externalId": "abc123",
+     *       "source": "NewsAPI",
+     *       "title": "Breaking News: Tech Innovation",
+     *       "description": "A comprehensive look at the latest tech innovations",
+     *       "content": "Full article content here...",
+     *       "url": "https://example.com/article",
+     *       "imageUrl": "https://example.com/image.jpg",
+     *       "author": "John Doe",
+     *       "category": "technology",
+     *       "publishedAt": "2024-01-15T10:30:00.000Z",
+     *       "contentHash": "hash123",
+     *       "createdAt": "2024-01-15T10:30:00.000Z",
+     *       "updatedAt": "2024-01-15T10:30:00.000Z"
+     *     }
+     *   ],
+     *   "meta": {
+     *     "current_page": 1,
+     *     "from": 1,
+     *     "last_page": 10,
+     *     "per_page": 15,
+     *     "to": 15,
+     *     "total": 150
+     *   }
+     * }
+     */
     public function index(IndexArticleRequest $request): PaginatedDataCollection
     {
         $articles = QueryBuilder::for(Article::class)
@@ -40,6 +89,36 @@ class ArticleController extends Controller
         return ArticleDTO::collect($articles, PaginatedDataCollection::class);
     }
 
+    /**
+     * Get a single article
+     *
+     * Retrieve detailed information about a specific article by its ID.
+     *
+     * @group Articles
+     *
+     * @urlParam id integer required The article ID. Example: 1
+     *
+     * @response 200 {
+     *   "id": 1,
+     *   "externalId": "abc123",
+     *   "source": "NewsAPI",
+     *   "title": "Breaking News: Tech Innovation",
+     *   "description": "A comprehensive look at the latest tech innovations",
+     *   "content": "Full article content here...",
+     *   "url": "https://example.com/article",
+     *   "imageUrl": "https://example.com/image.jpg",
+     *   "author": "John Doe",
+     *   "category": "technology",
+     *   "publishedAt": "2024-01-15T10:30:00.000Z",
+     *   "contentHash": "hash123",
+     *   "createdAt": "2024-01-15T10:30:00.000Z",
+     *   "updatedAt": "2024-01-15T10:30:00.000Z"
+     * }
+     *
+     * @response 404 {
+     *   "message": "Article not found"
+     * }
+     */
     public function show(int $id): ArticleDTO|Response
     {
         $article = Article::query()->find($id);
@@ -53,6 +132,22 @@ class ArticleController extends Controller
         return ArticleDTO::fromModel($article);
     }
 
+    /**
+     * Get available sources
+     *
+     * Retrieve a list of all distinct news sources available in the system.
+     * This endpoint is useful for populating filter dropdowns.
+     *
+     * @group Filter Options
+     *
+     * @response 200 {
+     *   "data": [
+     *     "NewsAPI",
+     *     "The Guardian",
+     *     "NY Times"
+     *   ]
+     * }
+     */
     public function sources(): CollectionResponse
     {
         $sources = Article::query()->select('source')
@@ -64,6 +159,25 @@ class ArticleController extends Controller
         return new CollectionResponse(data: $sources);
     }
 
+    /**
+     * Get available categories
+     *
+     * Retrieve a list of all distinct article categories available in the system.
+     * This endpoint is useful for populating filter dropdowns.
+     *
+     * @group Filter Options
+     *
+     * @response 200 {
+     *   "data": [
+     *     "business",
+     *     "entertainment",
+     *     "health",
+     *     "science",
+     *     "sports",
+     *     "technology"
+     *   ]
+     * }
+     */
     public function categories(): CollectionResponse
     {
         $categories = Article::query()->select('category')
@@ -78,6 +192,19 @@ class ArticleController extends Controller
 
     /**
      * Get available authors
+     *
+     * Retrieve a list of all distinct article authors available in the system.
+     * This endpoint is useful for populating filter dropdowns.
+     *
+     * @group Filter Options
+     *
+     * @response 200 {
+     *   "data": [
+     *     "Jane Smith",
+     *     "John Doe",
+     *     "Sarah Johnson"
+     *   ]
+     * }
      */
     public function authors(): CollectionResponse
     {
@@ -92,10 +219,51 @@ class ArticleController extends Controller
     }
 
     /**
-     * Get user preferences filtered articles
+     * Get personalized articles
      *
-     * This endpoint allows frontend to save user preferences
-     * and retrieve articles based on those preferences
+     * Retrieve articles filtered by user preferences. This endpoint allows you to fetch
+     * articles based on preferred sources, categories, and authors, with additional
+     * keyword and date range filtering capabilities.
+     *
+     * @group Articles
+     *
+     * @bodyParam preferred_sources string[] required Array of preferred news sources. Example: ["NewsAPI", "The Guardian"]
+     * @bodyParam preferred_categories string[] Array of preferred categories. Example: ["technology", "business"]
+     * @bodyParam preferred_authors string[] Array of preferred authors. Example: ["John Doe", "Jane Smith"]
+     * @bodyParam filter[keyword] string Search keyword in title, description, and content. Example: innovation
+     * @bodyParam filter[date_range][from] string Filter articles from this date (Y-m-d format). Example: 2024-01-01
+     * @bodyParam filter[date_range][to] string Filter articles to this date (Y-m-d format). Example: 2024-12-31
+     * @bodyParam page integer Page number for pagination. Example: 1
+     * @bodyParam per_page integer Number of items per page (1-100). Example: 15
+     *
+     * @response 200 {
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "externalId": "abc123",
+     *       "source": "NewsAPI",
+     *       "title": "Breaking News: Tech Innovation",
+     *       "description": "A comprehensive look at the latest tech innovations",
+     *       "content": "Full article content here...",
+     *       "url": "https://example.com/article",
+     *       "imageUrl": "https://example.com/image.jpg",
+     *       "author": "John Doe",
+     *       "category": "technology",
+     *       "publishedAt": "2024-01-15T10:30:00.000Z",
+     *       "contentHash": "hash123",
+     *       "createdAt": "2024-01-15T10:30:00.000Z",
+     *       "updatedAt": "2024-01-15T10:30:00.000Z"
+     *     }
+     *   ],
+     *   "meta": {
+     *     "current_page": 1,
+     *     "from": 1,
+     *     "last_page": 5,
+     *     "per_page": 15,
+     *     "to": 15,
+     *     "total": 75
+     *   }
+     * }
      */
     public function preferences(ArticlePreferencesRequest $request): PaginatedDataCollection
     {

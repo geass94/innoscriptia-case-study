@@ -11,6 +11,7 @@
         "laravel/framework": "^12.0",
         "laravel/horizon": "^5.39",
         "laravel/tinker": "^2.10.1",
+        "scalar/laravel": "^0.2.0",
         "spatie/laravel-data": "^4.18",
         "spatie/laravel-query-builder": "^6.3"
     },

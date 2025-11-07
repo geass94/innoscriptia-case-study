@@ -1,0 +1,708 @@
+name: Articles
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/articles
+    metadata:
+      custom: []
+      groupName: Articles
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List articles'
+      description: 'Retrieve a paginated list of articles with optional filtering and sorting.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (1-100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: 'Sort field and direction. Prefix with - for descending.'
+        required: false
+        example: '-published_at'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[keyword]':
+        custom: []
+        name: 'filter[keyword]'
+        description: 'Search keyword in title, description, and content.'
+        required: false
+        example: technology
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[source]':
+        custom: []
+        name: 'filter[source]'
+        description: 'Filter by a single source.'
+        required: false
+        example: NewsAPI
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[sources][]':
+        custom: []
+        name: 'filter[sources][]'
+        description: 'Filter by multiple sources.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[category]':
+        custom: []
+        name: 'filter[category]'
+        description: 'Filter by a single category.'
+        required: false
+        example: business
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[categories][]':
+        custom: []
+        name: 'filter[categories][]'
+        description: 'Filter by multiple categories.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[author]':
+        custom: []
+        name: 'filter[author]'
+        description: 'Filter by a single author name.'
+        required: false
+        example: 'John Doe'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[authors][]':
+        custom: []
+        name: 'filter[authors][]'
+        description: 'Filter by multiple authors.'
+        required: false
+        example: null
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[date_range][from]':
+        custom: []
+        name: 'filter[date_range][from]'
+        description: 'Filter articles from this date (Y-m-d format).'
+        required: false
+        example: '2024-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[date_range][to]':
+        custom: []
+        name: 'filter[date_range][to]'
+        description: 'Filter articles to this date (Y-m-d format).'
+        required: false
+        example: '2024-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      page: 1
+      per_page: 15
+      sort: '-published_at'
+      'filter[keyword]': technology
+      'filter[source]': NewsAPI
+      'filter[sources][]': null
+      'filter[category]': business
+      'filter[categories][]': null
+      'filter[author]': 'John Doe'
+      'filter[authors][]': null
+      'filter[date_range][from]': '2024-01-01'
+      'filter[date_range][to]': '2024-12-31'
+    bodyParameters:
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.keyword:
+        custom: []
+        name: filter.keyword
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: b
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.source:
+        custom: []
+        name: filter.source
+        description: ''
+        required: false
+        example: 'NY Times'
+        type: string
+        enumValues:
+          - NewsAPI
+          - 'The Guardian'
+          - 'NY Times'
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.sources:
+        custom: []
+        name: filter.sources
+        description: ''
+        required: false
+        example:
+          - 'The Guardian'
+        type: 'string[]'
+        enumValues:
+          - NewsAPI
+          - 'The Guardian'
+          - 'NY Times'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.category:
+        custom: []
+        name: filter.category
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: 'n'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.categories:
+        custom: []
+        name: filter.categories
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example:
+          - g
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.author:
+        custom: []
+        name: filter.author
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: z
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.authors:
+        custom: []
+        name: filter.authors
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example:
+          - m
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.date_range:
+        custom: []
+        name: filter.date_range
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.date_range.from:
+        custom: []
+        name: filter.date_range.from
+        description: 'Must be a valid date.'
+        required: false
+        example: '2025-11-07T12:20:21'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.date_range.to:
+        custom: []
+        name: filter.date_range.to
+        description: 'Must be a valid date.'
+        required: false
+        example: '2025-11-07T12:20:21'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Must be at least 1.'
+        required: false
+        example: 35
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Must be at least 1. Must not be greater than 100.'
+        required: false
+        example: 8
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      sort:
+        custom: []
+        name: sort
+        description: ''
+        required: false
+        example: published_at
+        type: string
+        enumValues:
+          - published_at
+          - '-published_at'
+          - created_at
+          - '-created_at'
+          - title
+          - '-title'
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      filter:
+        keyword: b
+        source: 'NY Times'
+        sources:
+          - 'The Guardian'
+        category: 'n'
+        categories:
+          - g
+        author: z
+        authors:
+          - m
+        date_range:
+          from: '2025-11-07T12:20:21'
+          to: '2025-11-07T12:20:21'
+      page: 35
+      per_page: 8
+      sort: published_at
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "data": [
+              {
+                "id": 1,
+                "externalId": "abc123",
+                "source": "NewsAPI",
+                "title": "Breaking News: Tech Innovation",
+                "description": "A comprehensive look at the latest tech innovations",
+                "content": "Full article content here...",
+                "url": "https://example.com/article",
+                "imageUrl": "https://example.com/image.jpg",
+                "author": "John Doe",
+                "category": "technology",
+                "publishedAt": "2024-01-15T10:30:00.000Z",
+                "contentHash": "hash123",
+                "createdAt": "2024-01-15T10:30:00.000Z",
+                "updatedAt": "2024-01-15T10:30:00.000Z"
+              }
+            ],
+            "meta": {
+              "current_page": 1,
+              "from": 1,
+              "last_page": 10,
+              "per_page": 15,
+              "to": 15,
+              "total": 150
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/articles/{id}'
+    metadata:
+      custom: []
+      groupName: Articles
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get a single article'
+      description: 'Retrieve detailed information about a specific article by its ID.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The article ID.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "externalId": "abc123",
+            "source": "NewsAPI",
+            "title": "Breaking News: Tech Innovation",
+            "description": "A comprehensive look at the latest tech innovations",
+            "content": "Full article content here...",
+            "url": "https://example.com/article",
+            "imageUrl": "https://example.com/image.jpg",
+            "author": "John Doe",
+            "category": "technology",
+            "publishedAt": "2024-01-15T10:30:00.000Z",
+            "contentHash": "hash123",
+            "createdAt": "2024-01-15T10:30:00.000Z",
+            "updatedAt": "2024-01-15T10:30:00.000Z"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "message": "Article not found"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/articles/preferences
+    metadata:
+      custom: []
+      groupName: Articles
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get personalized articles'
+      description: |-
+        Retrieve articles filtered by user preferences. This endpoint allows you to fetch
+        articles based on preferred sources, categories, and authors, with additional
+        keyword and date range filtering capabilities.
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      preferred_sources:
+        custom: []
+        name: preferred_sources
+        description: 'Array of preferred news sources.'
+        required: true
+        example:
+          - NewsAPI
+          - 'The Guardian'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      preferred_categories:
+        custom: []
+        name: preferred_categories
+        description: 'Array of preferred categories.'
+        required: false
+        example:
+          - technology
+          - business
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      preferred_authors:
+        custom: []
+        name: preferred_authors
+        description: 'Array of preferred authors.'
+        required: false
+        example:
+          - 'John Doe'
+          - 'Jane Smith'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      filter:
+        custom: []
+        name: filter
+        description: ''
+        required: false
+        example: []
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      filter.keyword:
+        custom: []
+        name: filter.keyword
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: g
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.date_range:
+        custom: []
+        name: filter.date_range
+        description: ''
+        required: false
+        example: null
+        type: object
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.date_range.from:
+        custom: []
+        name: filter.date_range.from
+        description: 'Must be a valid date.'
+        required: false
+        example: '2025-11-07T12:20:21'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      filter.date_range.to:
+        custom: []
+        name: filter.date_range.to
+        description: 'Must be a valid date.'
+        required: false
+        example: '2025-11-07T12:20:21'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'Number of items per page (1-100).'
+        required: false
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+      'filter[keyword]':
+        custom: []
+        name: 'filter[keyword]'
+        description: 'Search keyword in title, description, and content.'
+        required: false
+        example: innovation
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[date_range][from]':
+        custom: []
+        name: 'filter[date_range][from]'
+        description: 'Filter articles from this date (Y-m-d format).'
+        required: false
+        example: '2024-01-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      'filter[date_range][to]':
+        custom: []
+        name: 'filter[date_range][to]'
+        description: 'Filter articles to this date (Y-m-d format).'
+        required: false
+        example: '2024-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      preferred_sources:
+        - NewsAPI
+        - 'The Guardian'
+      preferred_categories:
+        - technology
+        - business
+      preferred_authors:
+        - 'John Doe'
+        - 'Jane Smith'
+      filter:
+        keyword: g
+        date_range:
+          from: '2025-11-07T12:20:21'
+          to: '2025-11-07T12:20:21'
+      page: 1
+      per_page: 15
+      'filter[keyword]': innovation
+      'filter[date_range][from]': '2024-01-01'
+      'filter[date_range][to]': '2024-12-31'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "data": [
+              {
+                "id": 1,
+                "externalId": "abc123",
+                "source": "NewsAPI",
+                "title": "Breaking News: Tech Innovation",
+                "description": "A comprehensive look at the latest tech innovations",
+                "content": "Full article content here...",
+                "url": "https://example.com/article",
+                "imageUrl": "https://example.com/image.jpg",
+                "author": "John Doe",
+                "category": "technology",
+                "publishedAt": "2024-01-15T10:30:00.000Z",
+                "contentHash": "hash123",
+                "createdAt": "2024-01-15T10:30:00.000Z",
+                "updatedAt": "2024-01-15T10:30:00.000Z"
+              }
+            ],
+            "meta": {
+              "current_page": 1,
+              "from": 1,
+              "last_page": 5,
+              "per_page": 15,
+              "to": 15,
+              "total": 75
+            }
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
