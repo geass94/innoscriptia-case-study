@@ -402,16 +402,6 @@ Returns a list of all available article authors.
 
 ## Development
 
-### Running Tests
-
-```bash
-# Run all tests
-php artisan test
-
-# Run with coverage
-php artisan test --coverage
-```
-
 ### Code Style
 
 ```bash
