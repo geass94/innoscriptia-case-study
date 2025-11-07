@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticlePreferencesRequest;
 use App\Http\Requests\IndexArticleRequest;
 use App\Models\Article;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Spatie\LaravelData\PaginatedDataCollection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -118,7 +119,7 @@ class ArticleController extends Controller
      *   "message": "Article not found"
      * }
      */
-    public function show(int $id): ArticleDTO|Response
+    public function show(int $id): ArticleDTO|JsonResponse
     {
         $article = Article::query()->find($id);
 
