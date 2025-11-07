@@ -114,7 +114,6 @@ class ArticleController extends Controller
      *   "createdAt": "2024-01-15T10:30:00.000Z",
      *   "updatedAt": "2024-01-15T10:30:00.000Z"
      * }
-     *
      * @response 404 {
      *   "message": "Article not found"
      * }

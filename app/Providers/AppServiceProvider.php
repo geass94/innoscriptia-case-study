@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('viewScalar', function (?User $user) {
             return true;
+
             return in_array($user->email, [
                 //
             ]);
